@@ -13,27 +13,28 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userID", nullable = false, unique = true)
+    @Column(name = "userid", nullable = false, unique = true)
     private Long userID;
 
-    @Column(name = "userEmail", nullable = false, unique = true)
+    @Column(name = "user_email", nullable = false, unique = true)
     private String userEmail;
 
-    @Column(name = "userPassword", nullable = false)
+    @Column(name = "user_password", nullable = false)
     private String userPassword;
 
-    @Column(name = "userName", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "userSurname", nullable = false)
+    @Column(name = "user_surname", nullable = false)
     private String userSurname;
 
-    @Column(name = "userRole", nullable = false)
+    @Column(name = "user_role", nullable = false)
     private String userRole;
 
-    @Column(name = "userBirthDay", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate userBirthDay;
+//    @Column(name = "userBirthDay", nullable = false)
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    @Temporal(TemporalType.DATE)
+//    private LocalDate userBirthDay;
 
     public User() {
 
