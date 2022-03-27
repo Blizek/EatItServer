@@ -17,4 +17,8 @@ public class Basket {
 
     @Column(name = "purchaserID", nullable = false)
     private Integer purchaserID;
+
+    public Basket() {
+
+    }
 }

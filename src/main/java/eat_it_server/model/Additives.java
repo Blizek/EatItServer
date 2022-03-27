@@ -23,4 +23,8 @@ public class Additives {
 
     @Column(name = "additivesPrice")
     private float additivesPrice;
+
+    public Additives() {
+
+    }
 }

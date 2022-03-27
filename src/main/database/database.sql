@@ -18,56 +18,15 @@ CREATE SCHEMA IF NOT EXISTS `eatit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb
 USE `eatit` ;
 
 -- -----------------------------------------------------
--- Table `eatit`.`restaurant_type`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_type` (
-  `restaurantTypeID` INT NOT NULL,
-  `restaurantTypeName` VARCHAR(150) NOT NULL,
-  PRIMARY KEY (`restaurantTypeID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `eatit`.`user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`user` (
-  `userid` INT NOT NULL,
-  `user_email` VARCHAR(100) NOT NULL,
-  `user_password` VARCHAR(100) NOT NULL,
-  `user_name` VARCHAR(100) NOT NULL,
-  `user_surname` VARCHAR(100) NOT NULL,
-  `user_role` VARCHAR(100) NOT NULL,
-  `user_birth_day` DATE NOT NULL,
-  PRIMARY KEY (`userid`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `eatit`.`restaurant`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`restaurant` (
-  `restaurantID` INT NOT NULL,
-  `restaurantTypeID` INT NOT NULL,
-  `ownerUserID` INT NOT NULL,
-  `restaurantName` VARCHAR(100) NOT NULL,
-  `restaurantPlace` VARCHAR(100) NOT NULL,
-  `restaurantLogoURL` VARCHAR(200) NULL DEFAULT NULL,
-  `RestaurntMainPhotoURL` VARCHAR(200) NULL DEFAULT NULL,
-  PRIMARY KEY (`restaurantID`),
-  INDEX `restaurant_retaurant_type_id_fk_idx` (`restaurantTypeID` ASC) VISIBLE,
-  INDEX `restaurant_user_id_fk_idx` (`ownerUserID` ASC) VISIBLE,
-  CONSTRAINT `restaurant_retaurant_type_id_fk`
-    FOREIGN KEY (`restaurantTypeID`)
-    REFERENCES `eatit`.`restaurant_type` (`restaurantTypeID`)
-    ON DELETE CASCADE,
-  CONSTRAINT `restaurant_user_id_fk`
-    FOREIGN KEY (`ownerUserID`)
-    REFERENCES `eatit`.`user` (`userid`)
-    ON DELETE CASCADE)
+  `restaurantid` INT NOT NULL AUTO_INCREMENT,
+  `restaurant_name` VARCHAR(100) NOT NULL,
+  `restaurant_place` VARCHAR(200) NOT NULL,
+  `restaurant_logo_url` VARCHAR(200) NULL DEFAULT NULL,
+  `restaurant_main_photo_url` VARCHAR(200) NULL DEFAULT NULL,
+  PRIMARY KEY (`restaurantid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -77,16 +36,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`dish`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`dish` (
-  `dishID` INT NOT NULL,
-  `restaurantID` INT NOT NULL,
-  `dishName` VARCHAR(200) NOT NULL,
-  `dishDescription` VARCHAR(1000) NOT NULL,
-  `dishPhotoURL` VARCHAR(200) NULL DEFAULT NULL,
-  PRIMARY KEY (`dishID`),
-  INDEX `dish_retaurant_id_fk_idx` (`restaurantID` ASC) VISIBLE,
-  CONSTRAINT `dish_retaurant_id_fk`
-    FOREIGN KEY (`restaurantID`)
-    REFERENCES `eatit`.`restaurant` (`restaurantID`)
+  `dishid` INT NOT NULL AUTO_INCREMENT,
+  `restaurantid` INT NOT NULL,
+  `dish_name` VARCHAR(200) NOT NULL,
+  `dish_description` VARCHAR(1000) NOT NULL,
+  `dish_photo_url` VARCHAR(200) NULL DEFAULT NULL,
+  PRIMARY KEY (`dishid`),
+  INDEX `dish_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  CONSTRAINT `dish_restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -97,7 +56,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`additives`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`additives` (
-  `additivesid` INT NOT NULL,
+  `additivesid` INT NOT NULL AUTO_INCREMENT,
   `dishid` INT NOT NULL,
   `additives_name` VARCHAR(200) NOT NULL,
   `additives_price` FLOAT NOT NULL,
@@ -105,7 +64,43 @@ CREATE TABLE IF NOT EXISTS `eatit`.`additives` (
   INDEX `additives_dish_id_fk_idx` (`dishid` ASC) VISIBLE,
   CONSTRAINT `additives_dish_id_fk`
     FOREIGN KEY (`dishid`)
-    REFERENCES `eatit`.`dish` (`dishID`)
+    REFERENCES `eatit`.`dish` (`dishid`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`user` (
+  `userid` INT NOT NULL AUTO_INCREMENT,
+  `user_email` VARCHAR(100) NOT NULL,
+  `user_password` VARCHAR(100) NOT NULL,
+  `user_name` VARCHAR(100) NOT NULL,
+  `user_surname` VARCHAR(100) NOT NULL,
+  `user_role` VARCHAR(50) NOT NULL,
+  `user_birth_date` DATE NOT NULL DEFAULT '1990-01-01',
+  PRIMARY KEY (`userid`),
+  UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`admin`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`admin` (
+  `adminid` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT NOT NULL,
+  PRIMARY KEY (`adminid`),
+  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC) VISIBLE,
+  CONSTRAINT `admin_user_id_fk`
+    FOREIGN KEY (`userid`)
+    REFERENCES `eatit`.`user` (`userid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -116,30 +111,31 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`purchaser`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`purchaser` (
-  `purchaserID` INT NOT NULL,
-  `userID` INT NOT NULL,
-  PRIMARY KEY (`purchaserID`),
-  INDEX `purchaser_user_id_fk_idx` (`userID` ASC) VISIBLE,
+  `purchaserid` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT NOT NULL,
+  PRIMARY KEY (`purchaserid`),
+  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC) VISIBLE,
   CONSTRAINT `purchaser_user_id_fk`
-    FOREIGN KEY (`userID`)
+    FOREIGN KEY (`userid`)
     REFERENCES `eatit`.`user` (`userid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `eatit`.`basket`
+-- Table `eatit`.`bracket`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`basket` (
-  `basketid` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `eatit`.`bracket` (
+  `bracketid` INT NOT NULL AUTO_INCREMENT,
   `purchaserid` INT NOT NULL,
-  PRIMARY KEY (`basketid`),
+  PRIMARY KEY (`bracketid`),
   INDEX `bracket_purchaser_id_fk_idx` (`purchaserid` ASC) VISIBLE,
-  CONSTRAINT `basket_purchaser_id_fk`
+  CONSTRAINT `bracket_purchaser_id_fk`
     FOREIGN KEY (`purchaserid`)
-    REFERENCES `eatit`.`purchaser` (`purchaserID`)
+    REFERENCES `eatit`.`purchaser` (`purchaserid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -150,15 +146,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`delivery_person`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`delivery_person` (
-  `deliveryPersonID` INT NOT NULL,
-  `userID` INT NOT NULL,
-  PRIMARY KEY (`deliveryPersonID`),
-  INDEX `deliveryPerson_user_id_fk_idx` (`userID` ASC) VISIBLE,
-  CONSTRAINT `deliveryPerson_user_id_fk`
-    FOREIGN KEY (`userID`)
+  `deliverypersonid` INT NOT NULL AUTO_INCREMENT,
+  `userid` INT NOT NULL,
+  PRIMARY KEY (`deliverypersonid`),
+  UNIQUE INDEX `userid_UNIQUE` (`userid` ASC) VISIBLE,
+  CONSTRAINT `delivery_person_user_id_fk`
+    FOREIGN KEY (`userid`)
     REFERENCES `eatit`.`user` (`userid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -167,15 +164,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`dish_options`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`dish_options` (
-  `dishOptionID` INT NOT NULL,
-  `dishID` INT NOT NULL,
-  `dishOptionDescription` VARCHAR(300) NOT NULL,
-  `dishOptionPrice` FLOAT NOT NULL,
-  PRIMARY KEY (`dishOptionID`),
-  INDEX `dish_option_dish_id_fk_idx` (`dishID` ASC) VISIBLE,
+  `dishoptionid` INT NOT NULL AUTO_INCREMENT,
+  `dishid` INT NOT NULL,
+  `dish_option_description` VARCHAR(300) NOT NULL,
+  `dish_option_price` FLOAT NOT NULL,
+  PRIMARY KEY (`dishoptionid`),
+  INDEX `dish_option_dish_id_fk_idx` (`dishid` ASC) VISIBLE,
   CONSTRAINT `dish_option_dish_id_fk`
-    FOREIGN KEY (`dishID`)
-    REFERENCES `eatit`.`dish` (`dishID`)
+    FOREIGN KEY (`dishid`)
+    REFERENCES `eatit`.`dish` (`dishid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -186,19 +183,19 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`final_dish`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`final_dish` (
-  `finalDishID` INT NOT NULL,
-  `dishID` INT NOT NULL,
-  `dishOptionID` INT NOT NULL,
-  PRIMARY KEY (`finalDishID`),
-  INDEX `final_dish_dish_id_fk_idx` (`dishID` ASC) VISIBLE,
-  INDEX `final_dish_dish_option_id_fk_idx` (`dishOptionID` ASC) VISIBLE,
+  `finaldishid` INT NOT NULL AUTO_INCREMENT,
+  `dishid` INT NOT NULL,
+  `dishoptionid` INT NOT NULL,
+  PRIMARY KEY (`finaldishid`),
+  INDEX `final_dish_dish_id_fk_idx` (`dishid` ASC) VISIBLE,
+  INDEX `final_dish_dish_option_id_fk_idx` (`dishoptionid` ASC) VISIBLE,
   CONSTRAINT `final_dish_dish_id_fk`
-    FOREIGN KEY (`dishID`)
-    REFERENCES `eatit`.`dish` (`dishID`)
+    FOREIGN KEY (`dishid`)
+    REFERENCES `eatit`.`dish` (`dishid`)
     ON DELETE CASCADE,
   CONSTRAINT `final_dish_dish_option_id_fk`
-    FOREIGN KEY (`dishOptionID`)
-    REFERENCES `eatit`.`dish_options` (`dishOptionID`)
+    FOREIGN KEY (`dishoptionid`)
+    REFERENCES `eatit`.`dish_options` (`dishoptionid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -209,17 +206,17 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`list_of_additives`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`list_of_additives` (
-  `additivesID` INT NOT NULL,
-  `finalDishID` INT NOT NULL,
-  INDEX `list_of_additives_additives_id_fk_idx` (`additivesID` ASC) VISIBLE,
-  INDEX `list_of_additives_final_dish_id_idx` (`finalDishID` ASC) VISIBLE,
+  `additivesid` INT NOT NULL,
+  `finaldishid` INT NOT NULL,
+  INDEX `list_of_additives_additives_id_fk_idx` (`additivesid` ASC) VISIBLE,
+  INDEX `list_of_additives_final_dish_id_fk_idx` (`finaldishid` ASC) VISIBLE,
   CONSTRAINT `list_of_additives_additives_id_fk`
-    FOREIGN KEY (`additivesID`)
+    FOREIGN KEY (`additivesid`)
     REFERENCES `eatit`.`additives` (`additivesid`)
     ON DELETE CASCADE,
-  CONSTRAINT `list_of_additives_final_dish_id`
-    FOREIGN KEY (`finalDishID`)
-    REFERENCES `eatit`.`final_dish` (`finalDishID`)
+  CONSTRAINT `list_of_additives_final_dish_id_fk`
+    FOREIGN KEY (`finaldishid`)
+    REFERENCES `eatit`.`final_dish` (`finaldishid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -230,17 +227,52 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`list_of_final_dishes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`list_of_final_dishes` (
-  `finalDishID` INT NOT NULL,
-  `basketID` INT NOT NULL,
-  INDEX `list_of_final_dishes_final_dish_id_fk_idx` (`finalDishID` ASC) VISIBLE,
-  INDEX `list_of_final_dishes_basket_id_fk_idx` (`basketID` ASC) VISIBLE,
-  CONSTRAINT `list_of_final_dishes_basket_id_fk`
-    FOREIGN KEY (`basketID`)
-    REFERENCES `eatit`.`basket` (`basketid`)
+  `finaldishid` INT NOT NULL,
+  `bracketid` INT NOT NULL,
+  INDEX `list_of_final_dishes_final_dish_id_fk_idx` (`finaldishid` ASC) VISIBLE,
+  INDEX `list_of_final_dishes_bracket_id_fk_idx` (`bracketid` ASC) VISIBLE,
+  CONSTRAINT `list_of_final_dishes_bracket_id_fk`
+    FOREIGN KEY (`bracketid`)
+    REFERENCES `eatit`.`bracket` (`bracketid`)
     ON DELETE CASCADE,
   CONSTRAINT `list_of_final_dishes_final_dish_id_fk`
-    FOREIGN KEY (`finalDishID`)
-    REFERENCES `eatit`.`final_dish` (`finalDishID`)
+    FOREIGN KEY (`finaldishid`)
+    REFERENCES `eatit`.`final_dish` (`finaldishid`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`restaurant_type`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_type` (
+  `restaruanttypeid` INT NOT NULL AUTO_INCREMENT,
+  `restaurant_type_name` VARCHAR(130) NOT NULL,
+  PRIMARY KEY (`restaruanttypeid`),
+  UNIQUE INDEX `restaurant_type_name_UNIQUE` (`restaurant_type_name` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`list_of_restaurant_types`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`list_of_restaurant_types` (
+  `restaurantid` INT NOT NULL,
+  `restauranttypeid` INT NOT NULL,
+  INDEX `list_of_restaurant_types_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  INDEX `list_of_restaurant_types_restaurant_type_id_fk_idx` (`restauranttypeid` ASC) VISIBLE,
+  CONSTRAINT `list_of_restaurant_types_restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
+    ON DELETE CASCADE,
+  CONSTRAINT `list_of_restaurant_types_restaurant_type_id_fk`
+    FOREIGN KEY (`restauranttypeid`)
+    REFERENCES `eatit`.`restaurant_type` (`restaruanttypeid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -251,24 +283,25 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`messages`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`messages` (
-  `messageID` INT NOT NULL,
-  `senderUserID` INT NOT NULL,
-  `recipientUserID` INT NOT NULL,
-  `messageTextValue` VARCHAR(2000) NOT NULL,
-  `messageTimeOfSending` DATETIME NOT NULL,
-  `messagesHasBeenRead` TINYINT NOT NULL,
-  PRIMARY KEY (`messageID`),
-  INDEX `message_sender_user_id_fk_idx` (`senderUserID` ASC) VISIBLE,
-  INDEX `messages_recipient_user_id_fk_idx` (`recipientUserID` ASC) VISIBLE,
+  `messageid` INT NOT NULL AUTO_INCREMENT,
+  `senderuserid` INT NOT NULL,
+  `recipientuserid` INT NOT NULL,
+  `message_text_value` VARCHAR(2000) NOT NULL,
+  `message_date_time` DATETIME NOT NULL,
+  `message_has_been_read` TINYINT NOT NULL,
+  PRIMARY KEY (`messageid`),
+  INDEX `messages_sender_user_id_fk_idx` (`senderuserid` ASC) VISIBLE,
+  INDEX `messages_recipient_user_id_fk_idx` (`recipientuserid` ASC) VISIBLE,
   CONSTRAINT `messages_recipient_user_id_fk`
-    FOREIGN KEY (`recipientUserID`)
+    FOREIGN KEY (`recipientuserid`)
     REFERENCES `eatit`.`user` (`userid`)
     ON DELETE CASCADE,
   CONSTRAINT `messages_sender_user_id_fk`
-    FOREIGN KEY (`senderUserID`)
+    FOREIGN KEY (`senderuserid`)
     REFERENCES `eatit`.`user` (`userid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -277,27 +310,27 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `eatit`.`order`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`order` (
-  `orderID` INT NOT NULL,
-  `purchaserID` INT NOT NULL,
-  `basketID` INT NOT NULL,
-  `deliveryPersonID` INT NOT NULL,
-  `orderPaceOfDelivery` VARCHAR(200) NOT NULL,
-  `orderDate` DATETIME NOT NULL,
-  PRIMARY KEY (`orderID`),
-  INDEX `order_purchaser_id_fk_idx` (`purchaserID` ASC) VISIBLE,
-  INDEX `order_basket_id_fk_idx` (`basketID` ASC) VISIBLE,
-  INDEX `order_delivery_person_id_fk_idx` (`deliveryPersonID` ASC) VISIBLE,
-  CONSTRAINT `order_basket_id_fk`
-    FOREIGN KEY (`basketID`)
-    REFERENCES `eatit`.`basket` (`basketid`)
+  `orderid` INT NOT NULL AUTO_INCREMENT,
+  `purchaserid` INT NOT NULL,
+  `bracketid` INT NOT NULL,
+  `deliverypersonid` INT NOT NULL,
+  `order_place_of_delivery` VARCHAR(200) NOT NULL,
+  `order_date` DATE NOT NULL,
+  PRIMARY KEY (`orderid`),
+  UNIQUE INDEX `bracketid_UNIQUE` (`bracketid` ASC) VISIBLE,
+  INDEX `order_purchaser_id_fk_idx` (`purchaserid` ASC) VISIBLE,
+  INDEX `order_delivery_person_id_fk_idx` (`deliverypersonid` ASC) VISIBLE,
+  CONSTRAINT `order_bracket_id_fk`
+    FOREIGN KEY (`bracketid`)
+    REFERENCES `eatit`.`bracket` (`bracketid`)
     ON DELETE CASCADE,
   CONSTRAINT `order_delivery_person_id_fk`
-    FOREIGN KEY (`deliveryPersonID`)
-    REFERENCES `eatit`.`delivery_person` (`deliveryPersonID`)
+    FOREIGN KEY (`deliverypersonid`)
+    REFERENCES `eatit`.`delivery_person` (`deliverypersonid`)
     ON DELETE CASCADE,
   CONSTRAINT `order_purchaser_id_fk`
-    FOREIGN KEY (`purchaserID`)
-    REFERENCES `eatit`.`purchaser` (`purchaserID`)
+    FOREIGN KEY (`purchaserid`)
+    REFERENCES `eatit`.`purchaser` (`purchaserid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -305,20 +338,41 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `eatit`.`restaurant_user`
+-- Table `eatit`.`restaurant_employees`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_user` (
-  `employeeUserID` INT NOT NULL,
-  `restaurantID` INT NOT NULL,
-  INDEX `restaurant_user_user_id_fk_idx` (`employeeUserID` ASC) VISIBLE,
-  INDEX `restaurant_user_restaurant_id_fk_idx` (`restaurantID` ASC) VISIBLE,
-  CONSTRAINT `restaurant_user_restaurant_id_fk`
-    FOREIGN KEY (`restaurantID`)
-    REFERENCES `eatit`.`restaurant` (`restaurantID`)
-    ON DELETE CASCADE,
-  CONSTRAINT `restaurant_user_user_id_fk`
-    FOREIGN KEY (`employeeUserID`)
+CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_employees` (
+  `restaurantid` INT NOT NULL,
+  `employeesuserid` INT NOT NULL,
+  INDEX `restaurant_employees_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  INDEX `restaurant_employees_employees_user_id_fk_idx` (`employeesuserid` ASC) VISIBLE,
+  CONSTRAINT `restaurant_employees_employees_user_id_fk`
+    FOREIGN KEY (`employeesuserid`)
     REFERENCES `eatit`.`user` (`userid`)
+    ON DELETE CASCADE,
+  CONSTRAINT `restaurant_employees_restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`restaurant_owner`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_owner` (
+  `restaurantid` INT NOT NULL,
+  `owneruserid` INT NOT NULL,
+  INDEX `restaurant_owner_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  INDEX `restaurant_owner_owner_user_id_fk_idx` (`owneruserid` ASC) VISIBLE,
+  CONSTRAINT `restaurant_owner_owner_user_id_fk`
+    FOREIGN KEY (`owneruserid`)
+    REFERENCES `eatit`.`user` (`userid`)
+    ON DELETE CASCADE,
+  CONSTRAINT `restaurant_owner_restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
