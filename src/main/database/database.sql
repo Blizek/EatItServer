@@ -180,6 +180,54 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `eatit`.`restaurant_role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_role` (
+  `restaurantroleid` INT NOT NULL AUTO_INCREMENT,
+  `restaurantid` INT NOT NULL,
+  `restaurant_role_name` VARCHAR(150) NOT NULL,
+  `person_can_edit_or_add_dish` TINYINT NOT NULL,
+  `person_can_edit_emlpoyees_in_restaurant` TINYINT NOT NULL,
+  `person_can_change_informations_about_restaurant` TINYINT NOT NULL,
+  PRIMARY KEY (`restaurantroleid`),
+  INDEX `restaurant_role_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  CONSTRAINT `restaurant_role_restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `eatit`.`employees_role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `eatit`.`employees_role` (
+  `employeesuserid` INT NOT NULL,
+  `restaurantid` INT NOT NULL,
+  `employeesrestaurantroleid` INT NOT NULL,
+  INDEX `employees_user_id_fk_idx` (`employeesuserid` ASC) VISIBLE,
+  INDEX `restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
+  INDEX `restaurant_role_id_fk_idx` (`employeesrestaurantroleid` ASC) VISIBLE,
+  CONSTRAINT `employees_user_id_fk`
+    FOREIGN KEY (`employeesuserid`)
+    REFERENCES `eatit`.`user` (`userid`)
+    ON DELETE CASCADE,
+  CONSTRAINT `restaurant_id_fk`
+    FOREIGN KEY (`restaurantid`)
+    REFERENCES `eatit`.`restaurant` (`restaurantid`)
+    ON DELETE CASCADE,
+  CONSTRAINT `restaurant_role_id_fk`
+    FOREIGN KEY (`employeesrestaurantroleid`)
+    REFERENCES `eatit`.`restaurant_role` (`restaurantroleid`)
+    ON DELETE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `eatit`.`final_dish`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `eatit`.`final_dish` (
@@ -331,48 +379,6 @@ CREATE TABLE IF NOT EXISTS `eatit`.`order` (
   CONSTRAINT `order_purchaser_id_fk`
     FOREIGN KEY (`purchaserid`)
     REFERENCES `eatit`.`purchaser` (`purchaserid`)
-    ON DELETE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `eatit`.`restaurant_employees`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_employees` (
-  `restaurantid` INT NOT NULL,
-  `employeesuserid` INT NOT NULL,
-  INDEX `restaurant_employees_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
-  INDEX `restaurant_employees_employees_user_id_fk_idx` (`employeesuserid` ASC) VISIBLE,
-  CONSTRAINT `restaurant_employees_employees_user_id_fk`
-    FOREIGN KEY (`employeesuserid`)
-    REFERENCES `eatit`.`user` (`userid`)
-    ON DELETE CASCADE,
-  CONSTRAINT `restaurant_employees_restaurant_id_fk`
-    FOREIGN KEY (`restaurantid`)
-    REFERENCES `eatit`.`restaurant` (`restaurantid`)
-    ON DELETE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `eatit`.`restaurant_owner`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_owner` (
-  `restaurantid` INT NOT NULL,
-  `owneruserid` INT NOT NULL,
-  INDEX `restaurant_owner_restaurant_id_fk_idx` (`restaurantid` ASC) VISIBLE,
-  INDEX `restaurant_owner_owner_user_id_fk_idx` (`owneruserid` ASC) VISIBLE,
-  CONSTRAINT `restaurant_owner_owner_user_id_fk`
-    FOREIGN KEY (`owneruserid`)
-    REFERENCES `eatit`.`user` (`userid`)
-    ON DELETE CASCADE,
-  CONSTRAINT `restaurant_owner_restaurant_id_fk`
-    FOREIGN KEY (`restaurantid`)
-    REFERENCES `eatit`.`restaurant` (`restaurantid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
