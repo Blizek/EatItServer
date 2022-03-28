@@ -1,13 +1,12 @@
 package eat_it_server.model;
 
-import lombok.Builder;
+
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "additives", schema = "eatit")
-@Builder
 @Data
 public class Additives {
     @Id
