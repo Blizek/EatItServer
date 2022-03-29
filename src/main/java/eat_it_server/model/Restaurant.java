@@ -3,6 +3,7 @@ package eat_it_server.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant", schema = "eatit")
@@ -24,6 +25,9 @@ public class Restaurant {
 
     @Column(name = "restaurant_main_photo_url")
     private String restaurantMainPhotoURL;
+
+    @ManyToMany(mappedBy = "restaurants")
+    private List<RestaurantType> restaurantTypes;
 
     public Restaurant() {
 

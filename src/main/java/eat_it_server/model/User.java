@@ -15,6 +15,12 @@ public class User {
     @Column(name = "userid", nullable = false, unique = true)
     private Long userID;
 
+    @Column(name = "restaurantid")
+    private Long restaurantID;
+
+    @Column(name = "restaurantroleid")
+    private Long restaurantRoleID;
+
     @Column(name = "user_email", nullable = false, unique = true)
     private String userEmail;
 
