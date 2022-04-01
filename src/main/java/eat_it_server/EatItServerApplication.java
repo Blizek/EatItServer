@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.List;
 
 @SpringBootApplication
-public class aaaEatItServerApplication{
+public class EatItServerApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(EatItServerApplication.class, args);
 	}
