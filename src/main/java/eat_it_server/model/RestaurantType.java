@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurant_type", schema = "eatit")
@@ -17,12 +18,8 @@ public class RestaurantType {
     @Column(name = "restaurant_type_name", nullable = false, unique = true)
     private String restaurantTypeName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "list_of_restaurant_types",
-            joinColumns = @JoinColumn(name = "restauranttypeid"),
-            inverseJoinColumns = @JoinColumn(name = "restaurantid"))
-    private List<Restaurant> restaurants;
+//    @ManyToMany(mappedBy = "restaurantTypes")
+//    private Set<Restaurant> restaurants;
 
     public RestaurantType() {
 

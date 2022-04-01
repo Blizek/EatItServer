@@ -11,16 +11,16 @@ import javax.persistence.*;
 public class Additives {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "additivesID", nullable = false, unique = true)
-    private Integer additivesID;
+    @Column(name = "additivesid", nullable = false, unique = true)
+    private Long additivesID;
 
-    @Column(name = "dishID", nullable = false)
-    private Integer dishID;
+    @Column(name = "dishid", nullable = false)
+    private Long dishID;
 
-    @Column(name = "additivesName", nullable = false)
+    @Column(name = "additives_name", nullable = false)
     private String additivesName;
 
-    @Column(name = "additivesPrice")
+    @Column(name = "additives_price")
     private float additivesPrice;
 
     public Additives() {

@@ -17,12 +17,13 @@ public class AdditivesController {
     AdditivesService additivesService;
 
     @GetMapping("")
-    public List<Additives> fetchAllAdditives() {
-        return additivesService.listAllAdditives();
+    public ResponseEntity<List<Additives>> fetchAllAdditives() {
+        List<Additives> listOfAllAdditives = additivesService.listAllAdditives();
+        return new ResponseEntity<>(listOfAllAdditives, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Additives> get(@PathVariable Integer id) {
+    public ResponseEntity<Additives> get(@PathVariable Long id) {
         try {
             Additives additives = additivesService.getAddition(id);
             return new ResponseEntity<>(additives, HttpStatus.OK);
@@ -32,12 +33,13 @@ public class AdditivesController {
     }
 
     @PostMapping("/")
-    public void add(@RequestBody Additives additives) {
+    public ResponseEntity<Additives> add(@RequestBody Additives additives) {
         additivesService.saveAdditives(additives);
+        return new ResponseEntity<>(additives, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Additives additives, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody Additives additives, @PathVariable Long id) {
         try {
             Additives existAddition = additivesService.getAddition(id);
             additives.setAdditivesID(id);
@@ -49,7 +51,7 @@ public class AdditivesController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         additivesService.deleteAddition(id);
     }
 }

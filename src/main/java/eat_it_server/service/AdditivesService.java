@@ -22,11 +22,11 @@ public class AdditivesService {
         additivesRepository.save(additives);
     }
 
-    public Additives getAddition(Integer id) {
+    public Additives getAddition(Long id) {
         return additivesRepository.findById(id).get();
     }
 
-    public void deleteAddition(Integer id) {
+    public void deleteAddition(Long id) {
         additivesRepository.deleteById(id);
     }
 }
