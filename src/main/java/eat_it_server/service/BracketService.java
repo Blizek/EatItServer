@@ -22,11 +22,11 @@ public class BracketService {
         bracketRepository.save(basket);
     }
 
-    public Bracket getBracket(Long id) {
+    public Bracket getBracket(Integer id) {
         return bracketRepository.findById(id).get();
     }
 
-    public void deleteBracket(Long id) {
+    public void deleteBracket(Integer id) {
         bracketRepository.deleteById(id);
     }
 }

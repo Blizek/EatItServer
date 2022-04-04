@@ -22,11 +22,11 @@ public class DishService {
         dishRepository.save(dish);
     }
 
-    public Dish getDish(Long id) {
+    public Dish getDish(Integer id) {
         return dishRepository.findById(id).get();
     }
 
-    public void deleteDish(Long id) {
+    public void deleteDish(Integer id) {
         dishRepository.deleteById(id);
     }
 }

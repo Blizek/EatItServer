@@ -22,11 +22,11 @@ public class RestaurantRoleService {
         restaurantRoleRepository.save(restaurantRole);
     }
 
-    public RestaurantRole getRestaurantRole(Long id) {
+    public RestaurantRole getRestaurantRole(Integer id) {
         return restaurantRoleRepository.findById(id).get();
     }
 
-    public void deleteRestaurantRole(Long id) {
+    public void deleteRestaurantRole(Integer id) {
         restaurantRoleRepository.deleteById(id);
     }
 }

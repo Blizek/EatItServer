@@ -1,47 +1,112 @@
 package eat_it_server.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "user", schema = "eatit")
-@Data
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid", nullable = false, unique = true)
-    private Long userID;
+    @Column(name = "userid", nullable = false)
+    private Integer id;
 
-    @Column(name = "restaurantid")
-    private Long restaurantID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurantid")
+    private Restaurant restaurantid;
 
-    @Column(name = "restaurantroleid")
-    private Long restaurantRoleID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurantroleid")
+    private RestaurantRole restaurantroleid;
 
-    @Column(name = "user_email", nullable = false, unique = true)
+    @Column(name = "user_email", nullable = false, length = 100)
     private String userEmail;
 
-    @Column(name = "user_password", nullable = false)
+    @Column(name = "user_password", nullable = false, length = 100)
     private String userPassword;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name", nullable = false, length = 100)
     private String userName;
 
-    @Column(name = "user_surname", nullable = false)
+    @Column(name = "user_surname", nullable = false, length = 100)
     private String userSurname;
 
-    @Column(name = "user_role", nullable = false)
+    @Column(name = "user_role", nullable = false, length = 50)
     private String userRole;
 
     @Column(name = "user_birth_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date userBirthDate;
+    private LocalDate userBirthDate;
 
-    public User() {
-
+    public LocalDate getUserBirthDate() {
+        return userBirthDate;
     }
+
+    public void setUserBirthDate(LocalDate userBirthDate) {
+        this.userBirthDate = userBirthDate;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public void setUserSurname(String userSurname) {
+        this.userSurname = userSurname;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public RestaurantRole getRestaurantroleid() {
+        return restaurantroleid;
+    }
+
+    public void setRestaurantroleid(RestaurantRole restaurantroleid) {
+        this.restaurantroleid = restaurantroleid;
+    }
+
+    public Restaurant getRestaurantid() {
+        return restaurantid;
+    }
+
+    public void setRestaurantid(Restaurant restaurantid) {
+        this.restaurantid = restaurantid;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

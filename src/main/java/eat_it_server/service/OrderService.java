@@ -22,11 +22,11 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public Order getOrder(Long id) {
+    public Order getOrder(Integer id) {
         return orderRepository.findById(id).get();
     }
 
-    public void deleteOrder(Long id) {
+    public void deleteOrder(Integer id) {
         orderRepository.deleteById(id);
     }
 }

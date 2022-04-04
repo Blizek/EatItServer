@@ -22,11 +22,11 @@ public class FinalDishService {
         finalDishRepository.save(finalDish);
     }
 
-    public FinalDish getFinalDish(Long id) {
+    public FinalDish getFinalDish(Integer id) {
         return finalDishRepository.findById(id).get();
     }
 
-    public void deleteFinalDish(Long id) {
+    public void deleteFinalDish(Integer id) {
         finalDishRepository.deleteById(id);
     }
 }

@@ -22,11 +22,11 @@ public class RestaurantTypeService {
         restaurantTypeRepository.save(restaurantType);
     }
 
-    public RestaurantType getRestaurantType(Long id) {
+    public RestaurantType getRestaurantType(Integer id) {
         return restaurantTypeRepository.findById(id).get();
     }
 
-    public void deleteRestaurantType(Long id) {
+    public void deleteRestaurantType(Integer id) {
         restaurantTypeRepository.deleteById(id);
     }
 }
