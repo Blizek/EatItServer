@@ -1,6 +1,8 @@
 package eat_it_server.model;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "additives")
@@ -19,6 +21,9 @@ public class Additive {
 
     @Column(name = "additives_price", nullable = false)
     private Double additivesPrice;
+
+    @ManyToMany(mappedBy = "additives")
+    private Set<FinalDish> finalDishes = new LinkedHashSet<>();
 
     public Double getAdditivesPrice() {
         return additivesPrice;
@@ -42,6 +47,14 @@ public class Additive {
 
     public void setDishid(Dish dishid) {
         this.dishid = dishid;
+    }
+
+    public Set<FinalDish> getFinalDishes() {
+        return finalDishes;
+    }
+
+    public void setFinalDishes(Set<FinalDish> finalDishes) {
+        this.finalDishes = finalDishes;
     }
 
     public Integer getId() {

@@ -1,6 +1,8 @@
 package eat_it_server.model;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
@@ -21,6 +23,12 @@ public class Restaurant {
 
     @Column(name = "restaurant_main_photo_url", length = 200)
     private String restaurantMainPhotoUrl;
+
+    @ManyToMany
+    @JoinTable(name = "list_of_restaurant_types",
+            joinColumns = @JoinColumn(name = "restaurantid"),
+            inverseJoinColumns = @JoinColumn(name = "restauranttypeid"))
+    private Set<RestaurantType> restaurantTypes = new LinkedHashSet<>();
 
     public String getRestaurantMainPhotoUrl() {
         return restaurantMainPhotoUrl;
@@ -52,6 +60,14 @@ public class Restaurant {
 
     public void setRestaurantName(String restaurantName) {
         this.restaurantName = restaurantName;
+    }
+
+    public Set<RestaurantType> getRestaurantTypes() {
+        return restaurantTypes;
+    }
+
+    public void setRestaurantTypes(Set<RestaurantType> restaurantTypes) {
+        this.restaurantTypes = restaurantTypes;
     }
 
     public Integer getId() {
