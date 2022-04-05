@@ -22,11 +22,11 @@ public class PurchaserService {
         purchaserRepository.save(purchaser);
     }
 
-    public Purchaser getPurchaser(Long id) {
+    public Purchaser getPurchaser(Integer id) {
         return purchaserRepository.findById(id).get();
     }
 
-    public void deletePurchaser(Long id) {
+    public void deletePurchaser(Integer id) {
         purchaserRepository.deleteById(id);
     }
 }

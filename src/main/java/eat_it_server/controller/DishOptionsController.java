@@ -1,7 +1,7 @@
 package eat_it_server.controller;
 
-import eat_it_server.model.DishOptions;
-import eat_it_server.service.DishOptionsService;
+import eat_it_server.model.DishOption;
+import eat_it_server.service.DishOptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +14,18 @@ import java.util.NoSuchElementException;
 @RequestMapping("api/dish_options")
 public class DishOptionsController {
     @Autowired
-    DishOptionsService dishOptionsService;
+    DishOptionService dishOptionsService;
 
     @GetMapping("")
-    public ResponseEntity<List<DishOptions>> fetchAllDishOptions() {
-        List<DishOptions> listOfAllDishOptions = dishOptionsService.listOfAllDishOptions();
+    public ResponseEntity<List<DishOption>> fetchAllDishOptions() {
+        List<DishOption> listOfAllDishOptions = dishOptionsService.listOfAllDishOptions();
         return new ResponseEntity<>(listOfAllDishOptions, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DishOptions> get(@PathVariable Long id) {
+    public ResponseEntity<DishOption> get(@PathVariable Integer id) {
         try {
-            DishOptions dishOptions = dishOptionsService.getDishOption(id);
+            DishOption dishOptions = dishOptionsService.getDishOption(id);
             return new ResponseEntity<>(dishOptions, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -33,16 +33,16 @@ public class DishOptionsController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<DishOptions> save(@RequestBody DishOptions dishOptions) {
-        dishOptionsService.saveDishOption(dishOptions);
-        return new ResponseEntity<>(dishOptions, HttpStatus.OK);
+    public ResponseEntity<DishOption> save(@RequestBody DishOption dishOption) {
+        dishOptionsService.saveDishOption(dishOption);
+        return new ResponseEntity<>(dishOption, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody DishOptions dishOptions, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody DishOption dishOptions, @PathVariable Integer id) {
         try {
-            DishOptions existDishOption = dishOptionsService.getDishOption(id);
-            dishOptions.setDishOptionID(id);
+            DishOption existDishOption = dishOptionsService.getDishOption(id);
+            dishOptions.setId(id);
             dishOptionsService.saveDishOption(dishOptions);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class DishOptionsController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         dishOptionsService.deleteDishOption(id);
     }
 }

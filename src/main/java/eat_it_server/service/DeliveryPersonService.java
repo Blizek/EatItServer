@@ -22,11 +22,11 @@ public class DeliveryPersonService {
         deliveryPersonRepository.save(deliveryPerson);
     }
 
-    public DeliveryPerson getDeliveryPerson(Long id) {
+    public DeliveryPerson getDeliveryPerson(Integer id) {
         return deliveryPersonRepository.findById(id).get();
     }
 
-    public void deleteDeliveryPerson(Long id) {
+    public void deleteDeliveryPerson(Integer id) {
         deliveryPersonRepository.deleteById(id);
     }
 }

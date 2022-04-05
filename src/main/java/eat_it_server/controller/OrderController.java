@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> get(@PathVariable Long id) {
+    public ResponseEntity<Order> get(@PathVariable Integer id) {
         try {
             Order order = orderService.getOrder(id);
             return new ResponseEntity<>(order, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Order order, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Order order, @PathVariable Integer id) {
         try {
             Order existOrder = orderService.getOrder(id);
-            order.setOrderID(id);
+            order.setId(id);
             orderService.saveOrder(order);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         orderService.deleteOrder(id);
     }
 }

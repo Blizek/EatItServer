@@ -1,7 +1,7 @@
 package eat_it_server.controller;
 
-import eat_it_server.model.Additives;
-import eat_it_server.service.AdditivesService;
+import eat_it_server.model.Additive;
+import eat_it_server.service.AdditiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +14,18 @@ import java.util.NoSuchElementException;
 @RequestMapping("api/additives")
 public class AdditivesController {
     @Autowired
-    AdditivesService additivesService;
+    AdditiveService additivesService;
 
     @GetMapping("")
-    public ResponseEntity<List<Additives>> fetchAllAdditives() {
-        List<Additives> listOfAllAdditives = additivesService.listAllAdditives();
+    public ResponseEntity<List<Additive>> fetchAllAdditives() {
+        List<Additive> listOfAllAdditives = additivesService.listAllAdditives();
         return new ResponseEntity<>(listOfAllAdditives, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Additives> get(@PathVariable Long id) {
+    public ResponseEntity<Additive> get(@PathVariable Integer id) {
         try {
-            Additives additives = additivesService.getAddition(id);
+            Additive additives = additivesService.getAddition(id);
             return new ResponseEntity<>(additives, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -33,17 +33,17 @@ public class AdditivesController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Additives> add(@RequestBody Additives additives) {
+    public ResponseEntity<Additive> add(@RequestBody Additive additives) {
         additivesService.saveAdditives(additives);
         return new ResponseEntity<>(additives, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Additives additives, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Additive additive, @PathVariable Integer id) {
         try {
-            Additives existAddition = additivesService.getAddition(id);
-            additives.setAdditivesID(id);
-            additivesService.saveAdditives(additives);
+            Additive existAddition = additivesService.getAddition(id);
+            additive.setId(id);
+            additivesService.saveAdditives(additive);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -51,7 +51,7 @@ public class AdditivesController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         additivesService.deleteAddition(id);
     }
 }

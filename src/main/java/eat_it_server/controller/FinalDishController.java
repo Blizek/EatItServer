@@ -23,7 +23,7 @@ public class FinalDishController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FinalDish> get(@PathVariable Long id) {
+    public ResponseEntity<FinalDish> get(@PathVariable Integer id) {
         try {
             FinalDish finalDish = finalDishService.getFinalDish(id);
             return new ResponseEntity<>(finalDish, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class FinalDishController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody FinalDish finalDish, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody FinalDish finalDish, @PathVariable Integer id) {
         try {
             FinalDish existFinalDish = finalDishService.getFinalDish(id);
-            finalDish.setFinalDishID(id);
+            finalDish.setId(id);
             finalDishService.saveFinalDish(finalDish);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class FinalDishController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         finalDishService.deleteFinalDish(id);
     }
 }

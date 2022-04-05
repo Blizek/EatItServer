@@ -23,7 +23,7 @@ public class PurchaserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Purchaser> get(@PathVariable Long id) {
+    public ResponseEntity<Purchaser> get(@PathVariable Integer id) {
         try {
             Purchaser purchaser = purchaserService.getPurchaser(id);
             return new ResponseEntity<>(purchaser, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class PurchaserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Purchaser purchaser, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Purchaser purchaser, @PathVariable Integer id) {
         try {
             Purchaser existPurchaser = purchaserService.getPurchaser(id);
-            purchaser.setPurchaserID(id);
+            purchaser.setId(id);
             purchaserService.savePurchaser(purchaser);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class PurchaserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletePurchaser(@PathVariable Long id) {
+    public void deletePurchaser(@PathVariable Integer id) {
         purchaserService.deletePurchaser(id);
     }
 }

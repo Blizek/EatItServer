@@ -23,7 +23,7 @@ public class RestaurantTypeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RestaurantType> get(@PathVariable Long id) {
+    public ResponseEntity<RestaurantType> get(@PathVariable Integer id) {
         try {
             RestaurantType restaurantType = restaurantTypeService.getRestaurantType(id);
             return new ResponseEntity<>(restaurantType, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class RestaurantTypeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody RestaurantType restaurantType, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody RestaurantType restaurantType, @PathVariable Integer id) {
         try {
             RestaurantType existRestaurantType = restaurantTypeService.getRestaurantType(id);
-            restaurantType.setRestaurantTypeID(id);
+            restaurantType.setId(id);
             restaurantTypeService.saveRestaurantType(restaurantType);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class RestaurantTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         restaurantTypeService.deleteRestaurantType(id);
     }
 }

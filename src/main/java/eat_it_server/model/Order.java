@@ -1,38 +1,79 @@
 package eat_it_server.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "order", schema = "eatit")
-@Data
+@Table(name = "`order`")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderid", nullable = false, unique = true)
-    private Long orderID;
+    @Column(name = "orderid", nullable = false)
+    private Integer id;
 
-    @Column(name = "purchaserid", nullable = false)
-    private Long purchaserID;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "purchaserid", nullable = false)
+    private Purchaser purchaserid;
 
-    @Column(name = "bracketid", nullable = false, unique = true)
-    private Long bracketID;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "bracketid", nullable = false)
+    private Bracket bracketid;
 
-    @Column(name = "deliverypersonid", nullable = false)
-    private Long deliveryPersonID;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "deliverypersonid", nullable = false)
+    private DeliveryPerson deliverypersonid;
 
-    @Column(name = "order_place_of_delivery", nullable = false)
+    @Column(name = "order_place_of_delivery", nullable = false, length = 200)
     private String orderPlaceOfDelivery;
 
     @Column(name = "order_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date orderDate;
+    private LocalDate orderDate;
 
-    public Order() {
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
 
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getOrderPlaceOfDelivery() {
+        return orderPlaceOfDelivery;
+    }
+
+    public void setOrderPlaceOfDelivery(String orderPlaceOfDelivery) {
+        this.orderPlaceOfDelivery = orderPlaceOfDelivery;
+    }
+
+    public DeliveryPerson getDeliverypersonid() {
+        return deliverypersonid;
+    }
+
+    public void setDeliverypersonid(DeliveryPerson deliverypersonid) {
+        this.deliverypersonid = deliverypersonid;
+    }
+
+    public Bracket getBracketid() {
+        return bracketid;
+    }
+
+    public void setBracketid(Bracket bracketid) {
+        this.bracketid = bracketid;
+    }
+
+    public Purchaser getPurchaserid() {
+        return purchaserid;
+    }
+
+    public void setPurchaserid(Purchaser purchaserid) {
+        this.purchaserid = purchaserid;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

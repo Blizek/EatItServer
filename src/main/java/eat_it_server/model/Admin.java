@@ -3,11 +3,11 @@ package eat_it_server.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "delivery_person")
-public class DeliveryPerson {
+@Table(name = "admin")
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deliverypersonid", nullable = false)
+    @Column(name = "adminid", nullable = false)
     private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)

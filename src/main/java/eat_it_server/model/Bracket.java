@@ -1,22 +1,32 @@
 package eat_it_server.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bracket", schema = "eatit")
-@Data
+@Table(name = "bracket")
 public class Bracket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bracketid", nullable = false, unique = true)
-    private Long basketID;
+    @Column(name = "bracketid", nullable = false)
+    private Integer id;
 
-    @Column(name = "purchaserid", nullable = false)
-    private Long purchaserID;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "purchaserid", nullable = false)
+    private Purchaser purchaserid;
 
-    public Bracket() {
+    public Purchaser getPurchaserid() {
+        return purchaserid;
+    }
 
+    public void setPurchaserid(Purchaser purchaserid) {
+        this.purchaserid = purchaserid;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

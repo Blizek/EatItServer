@@ -23,7 +23,7 @@ public class BracketController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bracket> get(@PathVariable Long id) {
+    public ResponseEntity<Bracket> get(@PathVariable Integer id) {
         try {
             Bracket bracket = bracketService.getBracket(id);
             return new ResponseEntity<>(bracket, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class BracketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Bracket bracket, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Bracket bracket, @PathVariable Integer id) {
         try {
             Bracket existBracket = bracketService.getBracket(id);
-            bracket.setBasketID(id);
+            bracket.setId(id);
             bracketService.saveBracket(bracket);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class BracketController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         bracketService.deleteBracket(id);
     }
 }

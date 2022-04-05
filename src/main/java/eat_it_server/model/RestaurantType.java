@@ -1,27 +1,31 @@
 package eat_it_server.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "restaurant_type", schema = "eatit")
-@Data
+@Table(name = "restaurant_type")
 public class RestaurantType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "restauranttypeid", nullable = false, unique = true)
-    private Long restaurantTypeID;
+    @Column(name = "restaruanttypeid", nullable = false)
+    private Integer id;
 
-    @Column(name = "restaurant_type_name", nullable = false, unique = true)
+    @Column(name = "restaurant_type_name", nullable = false, length = 130)
     private String restaurantTypeName;
 
-//    @ManyToMany(mappedBy = "restaurantTypes")
-//    private Set<Restaurant> restaurants;
+    public String getRestaurantTypeName() {
+        return restaurantTypeName;
+    }
 
-    public RestaurantType() {
+    public void setRestaurantTypeName(String restaurantTypeName) {
+        this.restaurantTypeName = restaurantTypeName;
+    }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

@@ -23,7 +23,7 @@ public class DeliveryPersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DeliveryPerson> get(@PathVariable Long id) {
+    public ResponseEntity<DeliveryPerson> get(@PathVariable Integer id) {
         try {
             DeliveryPerson deliveryPerson = deliveryPersonService.getDeliveryPerson(id);
             return new ResponseEntity<>(deliveryPerson, HttpStatus.OK);
@@ -39,10 +39,10 @@ public class DeliveryPersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DeliveryPerson> update(@RequestBody DeliveryPerson deliveryPerson, @PathVariable Long id) {
+    public ResponseEntity<DeliveryPerson> update(@RequestBody DeliveryPerson deliveryPerson, @PathVariable Integer id) {
         try {
             DeliveryPerson existDeliveryPerson = deliveryPersonService.getDeliveryPerson(id);
-            deliveryPerson.setDeliveryPersonID(id);
+            deliveryPerson.setId(id);
             deliveryPersonService.saveDeliveryPerson(deliveryPerson);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class DeliveryPersonController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         deliveryPersonService.deleteDeliveryPerson(id);
     }
 }

@@ -22,11 +22,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getUser(Long id) {
+    public User getUser(Integer id) {
         return userRepository.findById(id).get();
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
 }

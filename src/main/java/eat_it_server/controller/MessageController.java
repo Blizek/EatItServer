@@ -1,7 +1,7 @@
 package eat_it_server.controller;
 
-import eat_it_server.model.Messages;
-import eat_it_server.service.MessagesService;
+import eat_it_server.model.Message;
+import eat_it_server.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,20 +12,20 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/messages")
-public class MessagesController {
+public class MessageController {
     @Autowired
-    MessagesService messagesService;
+    MessageService messagesService;
 
     @GetMapping("")
-    public ResponseEntity<List<Messages>> fetchAllMessages() {
-        List<Messages> listOfAllMessages = messagesService.listOfAllMessages();
+    public ResponseEntity<List<Message>> fetchAllMessages() {
+        List<Message> listOfAllMessages = messagesService.listOfAllMessages();
         return new ResponseEntity<>(listOfAllMessages, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Messages> get(@PathVariable Long id) {
+    public ResponseEntity<Message> get(@PathVariable Integer id) {
         try {
-            Messages message = messagesService.getMessages(id);
+            Message message = messagesService.getMessages(id);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -33,16 +33,16 @@ public class MessagesController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Messages> add(@RequestBody Messages message) {
+    public ResponseEntity<Message> add(@RequestBody Message message) {
         messagesService.saveMessage(message);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Messages message, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Message message, @PathVariable Integer id) {
         try {
-            Messages existMessage = messagesService.getMessages(id);
-            message.setMessageID(id);
+            Message existMessage = messagesService.getMessages(id);
+            message.setId(id);
             messagesService.saveMessage(message);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
@@ -51,7 +51,7 @@ public class MessagesController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         messagesService.deleteMessage(id);
     }
 }
