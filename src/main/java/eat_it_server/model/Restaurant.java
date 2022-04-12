@@ -1,11 +1,14 @@
 package eat_it_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "restaurant")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

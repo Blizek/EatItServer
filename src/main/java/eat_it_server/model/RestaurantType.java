@@ -17,8 +17,8 @@ public class RestaurantType {
     @Column(name = "restaurant_type_name", nullable = false, length = 130)
     private String restaurantTypeName;
 
-    @ManyToMany(mappedBy = "restaurantTypes")
     @JsonIgnore
+    @ManyToMany(mappedBy = "restaurantTypes")
     Set<Restaurant> restaurants = new LinkedHashSet<>();
 
     public String getRestaurantTypeName() {

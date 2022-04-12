@@ -1,5 +1,7 @@
 package eat_it_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -22,6 +24,7 @@ public class Additive {
     @Column(name = "additives_price", nullable = false)
     private Double additivesPrice;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "additives")
     private Set<FinalDish> finalDishes = new LinkedHashSet<>();
 

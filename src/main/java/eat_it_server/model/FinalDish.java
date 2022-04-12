@@ -1,5 +1,8 @@
 package eat_it_server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -26,10 +29,8 @@ public class FinalDish {
             inverseJoinColumns = @JoinColumn(name = "additivesid"))
     private Set<Additive> additives = new LinkedHashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "list_of_final_dishes",
-            joinColumns = @JoinColumn(name = "finaldishid"),
-            inverseJoinColumns = @JoinColumn(name = "bracketid"))
+    @JsonIgnore
+    @ManyToMany(mappedBy = "finalDishes")
     private Set<Bracket> brackets = new LinkedHashSet<>();
 
     public Set<Bracket> getBrackets() {
