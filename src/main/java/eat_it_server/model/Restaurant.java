@@ -2,6 +2,8 @@ package eat_it_server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -28,6 +30,7 @@ public class Restaurant {
     private String restaurantMainPhotoUrl;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "list_of_restaurant_types",
             joinColumns = @JoinColumn(name = "restaurantid"),
             inverseJoinColumns = @JoinColumn(name = "restauranttypeid"))

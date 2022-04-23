@@ -40,6 +40,28 @@ public class User {
     @Column(name = "user_birth_date", nullable = false)
     private LocalDate userBirthDate;
 
+    @Column(name = "user_pr_photo", length = 200)
+    private String userProfilePhoto;
+
+    @Column(name = "user_eat_it_points", nullable = false)
+    private Integer userEatItPoints;
+
+    public Integer getUserEatItPoints() {
+        return userEatItPoints;
+    }
+
+    public void setUserEatItPoints(Integer userEatItPoints) {
+        this.userEatItPoints = userEatItPoints;
+    }
+
+    public String getUserProfilePhoto() {
+        return userProfilePhoto;
+    }
+
+    public void setUserProfilePhoto(String userProfilePhoto) {
+        this.userProfilePhoto = userProfilePhoto;
+    }
+
     public LocalDate getUserBirthDate() {
         return userBirthDate;
     }
