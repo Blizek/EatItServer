@@ -30,7 +30,6 @@ public class Restaurant {
     private String restaurantMainPhotoUrl;
 
     @ManyToMany
-    @JsonIgnore
     @JoinTable(name = "list_of_restaurant_types",
             joinColumns = @JoinColumn(name = "restaurantid"),
             inverseJoinColumns = @JoinColumn(name = "restauranttypeid"))

@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/restaurants")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RestaurantController {
     @Autowired
     RestaurantService restaurantService;
@@ -30,6 +31,21 @@ public class RestaurantController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/cities/{city}")
+    public ResponseEntity<List<Restaurant>> fetchAllCityRestaurants(@PathVariable String city) {
+        List<Restaurant> listOfAllCityRestaurants = restaurantService.listOfAllCityRestaurants(city);
+        return new ResponseEntity<>(listOfAllCityRestaurants, HttpStatus.OK);
+    }
+
+    @GetMapping("/cities/{city}/{restaurantType}")
+    public ResponseEntity<List<Restaurant>> fetchAllRestaurantWithThisTypeInCity(@PathVariable String city,
+                                                                                 @PathVariable Integer restaurantType) {
+        List<Restaurant> listOfAllRestaurantsWithThisTypeInCity = restaurantService.listOfAllRestaurantTypeRestaurantsInCity(
+                city, restaurantType
+        );
+        return new ResponseEntity<>(listOfAllRestaurantsWithThisTypeInCity, HttpStatus.OK);
     }
 
     @PostMapping("/")

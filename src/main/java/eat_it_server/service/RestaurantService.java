@@ -18,6 +18,14 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
+    public List<Restaurant> listOfAllCityRestaurants(String city) {
+        return restaurantRepository.getRestaurantByCity(city);
+    }
+
+    public List<Restaurant> listOfAllRestaurantTypeRestaurantsInCity(String city, Integer restaurantType) {
+        return restaurantRepository.getRestaurantByCityAndRestaurantType(city, restaurantType);
+    }
+
     public void saveRestaurant(Restaurant restaurant) {
         restaurantRepository.save(restaurant);
     }
