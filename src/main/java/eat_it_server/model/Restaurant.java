@@ -29,11 +29,22 @@ public class Restaurant {
     @Column(name = "restaurant_main_photo_url", length = 200)
     private String restaurantMainPhotoUrl;
 
+    @Column(name = "restaurant_background_photo_url", length = 200)
+    private String restaurantBackgroundPhotoUrl;
+
     @ManyToMany
     @JoinTable(name = "list_of_restaurant_types",
             joinColumns = @JoinColumn(name = "restaurantid"),
             inverseJoinColumns = @JoinColumn(name = "restauranttypeid"))
     private Set<RestaurantType> restaurantTypes = new LinkedHashSet<>();
+
+    public String getRestaurantBackgroundPhotoUrl() {
+        return restaurantBackgroundPhotoUrl;
+    }
+
+    public void setRestaurantBackgroundPhotoUrl(String restaurantBackgroundPhotoUrl) {
+        this.restaurantBackgroundPhotoUrl = restaurantBackgroundPhotoUrl;
+    }
 
     public String getRestaurantMainPhotoUrl() {
         return restaurantMainPhotoUrl;

@@ -18,6 +18,10 @@ public class DishService {
         return dishRepository.findAll();
     }
 
+    public List<Dish> listOfAllRestaurantDishes(Integer id) {
+        return dishRepository.fetchAllRestaurantDishes(id);
+    }
+
     public void saveDish(Dish dish) {
         dishRepository.save(dish);
     }

@@ -32,6 +32,16 @@ public class DishController {
         }
     }
 
+    @GetMapping("/restaurant/{id}")
+    public ResponseEntity<List<Dish>> fetchAllRestaurantDishes(@PathVariable Integer id) {
+        try {
+            List<Dish> listOfAllRestaurantDishes = dishService.listOfAllRestaurantDishes(id);
+            return new ResponseEntity<>(listOfAllRestaurantDishes, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/")
     public ResponseEntity<Dish> save(@RequestBody Dish dish) {
         dishService.saveDish(dish);

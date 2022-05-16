@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `eatit`.`restaurant` (
   `restaurant_place` VARCHAR(200) NOT NULL,
   `restaurant_logo_url` VARCHAR(200) NULL DEFAULT NULL,
   `restaurant_main_photo_url` VARCHAR(200) NULL DEFAULT NULL,
+  `restaurant_background_photo_url` VARCHAR(200) NULL DEFAULT NULL,
   PRIMARY KEY (`restaurantid`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 3
@@ -291,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `eatit`.`restaurant_type` (
   PRIMARY KEY (`restaruanttypeid`),
   UNIQUE INDEX `restaurant_type_name_UNIQUE` (`restaurant_type_name` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
