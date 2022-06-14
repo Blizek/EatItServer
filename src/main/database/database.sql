@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `eatit`.`additives` (
     REFERENCES `eatit`.`dish` (`dishid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -214,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `eatit`.`dish_options` (
     REFERENCES `eatit`.`dish` (`dishid`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 

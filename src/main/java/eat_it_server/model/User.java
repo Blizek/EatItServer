@@ -40,7 +40,7 @@ public class User {
     @Column(name = "user_birth_date", nullable = false)
     private LocalDate userBirthDate;
 
-    @Column(name = "user_pr_photo", length = 200)
+    @Column(name = "user_profile_photo", length = 200)
     private String userProfilePhoto;
 
     @Column(name = "user_eat_it_points", nullable = false)

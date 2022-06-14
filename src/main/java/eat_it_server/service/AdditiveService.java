@@ -18,6 +18,10 @@ public class AdditiveService {
         return additivesRepository.findAll();
     }
 
+    public List<Additive> listOfAllDishAdditives(Integer id) {
+        return additivesRepository.dishAdditives(id);
+    }
+
     public void saveAdditives(Additive additive) {
         additivesRepository.save(additive);
     }

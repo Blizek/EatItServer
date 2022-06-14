@@ -32,6 +32,13 @@ public class DishOptionsController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("dish/{id}")
+    public ResponseEntity<List<DishOption>> fetchAllDishOptionsByDishId(@PathVariable Integer id) {
+        List<DishOption> listOfAllDishOptionsByDishId = dishOptionsService.listOfAllDishOptions(id);
+        return new ResponseEntity<>(listOfAllDishOptionsByDishId, HttpStatus.OK);
+    }
+
     @PostMapping("/")
     public ResponseEntity<DishOption> save(@RequestBody DishOption dishOption) {
         dishOptionsService.saveDishOption(dishOption);

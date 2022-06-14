@@ -32,6 +32,13 @@ public class UserController {
         }
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<String> checkIfCorrectLoginAndPassword(@RequestBody User userRequest) {
+        User user = userService.checkIfCorrectLoginAndPassword(userRequest.getUserEmail(), userRequest.getUserPassword());
+        if (user != null) return new ResponseEntity<>("correct", HttpStatus.OK);
+        else return new ResponseEntity<>("incorrect", HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/")
     public ResponseEntity<User> add(@RequestBody User user) {
         userService.saveUser(user);

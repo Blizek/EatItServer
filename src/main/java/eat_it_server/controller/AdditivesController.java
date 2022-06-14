@@ -32,6 +32,13 @@ public class AdditivesController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/dish/{id}")
+    public ResponseEntity<List<Additive>> fetchAllDishAdditives(@PathVariable Integer id) {
+        List<Additive> listOfAllDishAdditives = additivesService.listOfAllDishAdditives(id);
+        return new ResponseEntity<>(listOfAllDishAdditives, HttpStatus.OK);
+    }
+
     @PostMapping("/")
     public ResponseEntity<Additive> add(@RequestBody Additive additives) {
         additivesService.saveAdditives(additives);

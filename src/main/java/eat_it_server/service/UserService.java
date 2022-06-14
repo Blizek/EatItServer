@@ -18,6 +18,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User checkIfCorrectLoginAndPassword(String email, String password) {
+        return userRepository.checkIfCorrectLoginAndPassword(email, password);
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }

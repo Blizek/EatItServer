@@ -32,6 +32,7 @@ public class DishController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/restaurant/{id}")
     public ResponseEntity<List<Dish>> fetchAllRestaurantDishes(@PathVariable Integer id) {
         try {

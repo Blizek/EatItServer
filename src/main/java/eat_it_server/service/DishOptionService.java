@@ -18,6 +18,10 @@ public class DishOptionService {
         return dishOptionRepository.findAll();
     }
 
+    public List<DishOption> listOfAllDishOptions(Integer id) {
+        return dishOptionRepository.fetchAllDishOptions(id);
+    }
+
     public void saveDishOption(DishOption dishOption) {
         dishOptionRepository.save(dishOption);
     }
