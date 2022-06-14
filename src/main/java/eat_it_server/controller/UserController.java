@@ -1,8 +1,13 @@
 package eat_it_server.controller;
 
+import com.google.gson.Gson;
+import eat_it_server.features.EmailSenderService;
+import eat_it_server.model.Response;
 import eat_it_server.model.User;
 import eat_it_server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +20,8 @@ import java.util.NoSuchElementException;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    EmailSenderService senderService;
 
     @GetMapping("")
     public ResponseEntity<List<User>> fetchAllUsers() {
@@ -35,13 +42,16 @@ public class UserController {
     @GetMapping("/check")
     public ResponseEntity<String> checkIfCorrectLoginAndPassword(@RequestBody User userRequest) {
         User user = userService.checkIfCorrectLoginAndPassword(userRequest.getUserEmail(), userRequest.getUserPassword());
-        if (user != null) return new ResponseEntity<>("correct", HttpStatus.OK);
-        else return new ResponseEntity<>("incorrect", HttpStatus.NOT_FOUND);
+        if (user != null) return new ResponseEntity<>(new Gson().toJson(new Response("correct")), HttpStatus.OK);
+        else return new ResponseEntity<>(new Gson().toJson(new Response("incorrect")), HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/")
     public ResponseEntity<User> add(@RequestBody User user) {
         userService.saveUser(user);
+        senderService.sendEmail("blazej.naziemiec@gmail.com",
+                "Test",
+                "Test email");
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
