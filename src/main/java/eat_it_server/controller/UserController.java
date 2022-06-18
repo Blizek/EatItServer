@@ -8,10 +8,12 @@ import eat_it_server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -39,20 +41,26 @@ public class UserController {
         }
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<String> checkIfCorrectLoginAndPassword(@RequestBody User userRequest) {
+    @CrossOrigin
+    @PostMapping("/check")
+    public ResponseEntity<User> checkIfCorrectLoginAndPassword(@RequestBody User userRequest) {
         User user = userService.checkIfCorrectLoginAndPassword(userRequest.getUserEmail(), userRequest.getUserPassword());
-        if (user != null) return new ResponseEntity<>(new Gson().toJson(new Response("correct")), HttpStatus.OK);
-        else return new ResponseEntity<>(new Gson().toJson(new Response("incorrect")), HttpStatus.NOT_FOUND);
+        if (user != null) return new ResponseEntity<>(user, HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @CrossOrigin
     @PostMapping("/")
     public ResponseEntity<User> add(@RequestBody User user) {
-        userService.saveUser(user);
-        senderService.sendEmail("blazej.naziemiec@gmail.com",
-                "Test",
-                "Test email");
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        try {
+//        senderService.sendEmail("blazej.naziemiec@gmail.com",
+//                "Test",
+//                "Test email");
+            userService.saveUser(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
