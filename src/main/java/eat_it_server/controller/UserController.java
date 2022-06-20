@@ -25,12 +25,14 @@ public class UserController {
     @Autowired
     EmailSenderService senderService;
 
+    @CrossOrigin
     @GetMapping("")
     public ResponseEntity<List<User>> fetchAllUsers() {
         List<User> listOfAllUsers = userService.listOfAllUsers();
         return new ResponseEntity<>(listOfAllUsers, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
         try {
@@ -39,6 +41,14 @@ public class UserController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @CrossOrigin
+    @PostMapping("/check_if_email_exists")
+    public ResponseEntity<User> checkIfUserWithThisEmailExists(@RequestBody User userRequest) {
+        User user = userService.checkIfUserWithThisEmailExists(userRequest.getUserEmail());
+        if (user != null) return new ResponseEntity<>(user, HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @CrossOrigin
@@ -63,18 +73,32 @@ public class UserController {
         }
     }
 
+    @CrossOrigin
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody User user, @PathVariable Integer id) {
         try {
             User existUser = userService.getUser(id);
             user.setId(id);
+            user.setUserPassword(existUser.getUserPassword());
             userService.saveUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @CrossOrigin
+    @PutMapping("/change_password")
+    public ResponseEntity<?> changePassword(@RequestBody User user) {
+        try {
+            userService.changePassword(user.getUserPassword(), user.getUserEmail());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         userService.deleteUser(id);

@@ -22,12 +22,20 @@ public class UserService {
         return userRepository.checkIfCorrectLoginAndPassword(email, password);
     }
 
+    public User checkIfUserWithThisEmailExists(String email) {
+        return userRepository.checkIfUserWithThisEmailExists(email);
+    }
+
     public void saveUser(User user) {
         userRepository.save(user);
     }
 
     public User getUser(Integer id) {
         return userRepository.findById(id).get();
+    }
+
+    public void changePassword(String newPassword, String email) {
+        userRepository.changePassword(newPassword, email);
     }
 
     public void deleteUser(Integer id) {

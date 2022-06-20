@@ -18,6 +18,14 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> listOfAllPurchaserOrders(Integer id) {
+        return orderRepository.allPurchaserOrders(id);
+    }
+
+    public List<Order> listOfAllDeliveredOrders(Integer id) {
+        return orderRepository.allDeliveredOrders(id);
+    }
+
     public void saveOrder(Order order) {
         orderRepository.save(order);
     }

@@ -16,7 +16,7 @@ public class Purchaser {
     @Column(name = "purchaserid", nullable = false)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
     @JoinColumn(name = "userid", nullable = false)
     private User userid;
 

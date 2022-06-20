@@ -18,6 +18,10 @@ public class PurchaserService {
         return purchaserRepository.findAll();
     }
 
+    public Purchaser getUsersPurchaser(Integer id) {
+        return purchaserRepository.getUsersPurchaser(id);
+    }
+
     public void savePurchaser(Purchaser purchaser) {
         purchaserRepository.save(purchaser);
     }

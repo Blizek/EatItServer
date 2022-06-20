@@ -32,6 +32,7 @@ public class FinalDishController {
         }
     }
 
+    @CrossOrigin
     @PostMapping("/")
     public ResponseEntity<FinalDish> save(@RequestBody FinalDish finalDish) {
         finalDishService.saveFinalDish(finalDish);

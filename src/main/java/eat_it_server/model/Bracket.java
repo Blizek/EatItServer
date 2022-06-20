@@ -15,7 +15,7 @@ public class Bracket {
     @Column(name = "bracketid", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
     @JoinColumn(name = "purchaserid", nullable = false)
     private Purchaser purchaserid;
 
@@ -47,5 +47,14 @@ public class Bracket {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Bracket{" +
+                "id=" + id +
+                ", purchaserid=" + purchaserid +
+                ", finalDishes=" + finalDishes +
+                '}';
     }
 }

@@ -29,6 +29,17 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private LocalDate orderDate;
 
+    @Column(name = "order_status", nullable = false, length = 20)
+    private String orderStatus;
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public LocalDate getOrderDate() {
         return orderDate;
     }

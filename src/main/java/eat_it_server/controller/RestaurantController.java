@@ -23,6 +23,7 @@ public class RestaurantController {
         return new ResponseEntity<>(listOfAllRestaurants, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable Integer id) {
         try {

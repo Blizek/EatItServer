@@ -32,6 +32,20 @@ public class OrderController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/purchaser_orders/{id}")
+    public ResponseEntity<List<Order>> fetchAllPurchaserOrders(@PathVariable Integer id) {
+        List<Order> listOfAllPurchaserOrders = orderService.listOfAllPurchaserOrders(id);
+        return new ResponseEntity<>(listOfAllPurchaserOrders, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/delivered_orders/{id}")
+    public ResponseEntity<List<Order>> fetchAllDeliveredOrders(@PathVariable Integer id) {
+        List<Order> listOfAllDeliveredOrders = orderService.listOfAllDeliveredOrders(id);
+        return new ResponseEntity<>(listOfAllDeliveredOrders, HttpStatus.OK);
+    }
+
     @PostMapping("/")
     public ResponseEntity<Order> save(@RequestBody Order order) {
         orderService.saveOrder(order);

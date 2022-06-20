@@ -32,6 +32,17 @@ public class PurchaserController {
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/users/{id}")
+    public ResponseEntity<Purchaser> getUsersPurchaser(@PathVariable Integer id) {
+        try {
+            Purchaser purchaser = purchaserService.getUsersPurchaser(id);
+            return new ResponseEntity<>(purchaser, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/")
     public ResponseEntity<Purchaser> add(@RequestBody Purchaser purchaser) {
         purchaserService.savePurchaser(purchaser);
