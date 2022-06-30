@@ -22,6 +22,7 @@ public class OrderController {
         return new ResponseEntity<>(listOfAllOrders, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<Order> get(@PathVariable Integer id) {
         try {
