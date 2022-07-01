@@ -15,7 +15,7 @@ public class Bracket {
     @Column(name = "bracketid", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.MERGE)
     @JoinColumn(name = "purchaserid", nullable = false)
     private Purchaser purchaserid;
 

@@ -35,7 +35,6 @@ public class BracketController {
     @CrossOrigin
     @PostMapping("/")
     public ResponseEntity<Bracket> add(@RequestBody Bracket bracket) {
-        System.out.println();
         bracketService.saveBracket(bracket);
         return new ResponseEntity<>(bracket, HttpStatus.OK);
     }
